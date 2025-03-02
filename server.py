@@ -5,7 +5,7 @@ import re
 import time
 
 app = Flask(__name__)
-CORS(app, resources={r"/scan": {"origins": "https://webdefend.netlify.app/"}})
+CORS(app, resources={r"/*": {"origins": "*"}})  # Allow all origins for all routes
 
 # Rate limiting dictionary
 request_count = {}
