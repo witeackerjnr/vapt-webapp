@@ -1,6 +1,6 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
-import nmap3
+import nmap
 import re
 import time
 
@@ -18,13 +18,14 @@ def home():
     return jsonify({"message": "Welcome to the VAPT Web App!"}), 200
 
 def run_nmap_scan(target):
-    """Runs a basic Nmap scan using python-nmap3."""
-    nm = nmap3.NmapScanTechniques()
+    """Runs an Nmap scan using python-nmap"""
+    nm = nmap.PortScanner()
     try:
-        scan_result = nm.nmap_ping_scan(target)
+        scan_result = nm.scan(target, arguments="-F")
         return scan_result
     except Exception as e:
         return {"error": f"Nmap error: {str(e)}"}
+
 
 @app.route("/scan", methods=["POST", "OPTIONS"])
 def scan():
