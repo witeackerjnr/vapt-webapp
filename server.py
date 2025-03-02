@@ -1,12 +1,12 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
-import subprocess
+import nmap
 import re
 import time
 
 app = Flask(__name__)
 
-# Allow only Netlify frontend 
+# Allow only Netlify frontend
 NETLIFY_URL = "https://webdefend.netlify.app"
 CORS(app, resources={r"/scan": {"origins": NETLIFY_URL, "methods": ["GET", "POST", "OPTIONS"], "allow_headers": ["Content-Type"]}}, supports_credentials=True)
 
@@ -46,12 +46,13 @@ def scan():
     else:
         request_count[client_ip] = (current_time, 1)
 
-    # Run Secure Nmap Scan
+    # Run Nmap scan using Python-Nmap
     try:
-        result = subprocess.run(["nmap", "-F", target], capture_output=True, text=True, timeout=10)
-        return jsonify({"scan_result": result.stdout}), 200
-    except subprocess.TimeoutExpired:
-        return jsonify({"error": "Scan timed out. Try again later."}), 500
+        nm = nmap.PortScanner()
+        scan_result = nm.scan(hosts=target, arguments='-F')
+        return jsonify({"scan_result": scan_result}), 200
+    except nmap.PortScannerError as e:
+        return jsonify({"error": f"Nmap error: {str(e)}"}), 500
     except Exception as e:
         return jsonify({"error": f"Unexpected error: {str(e)}"}), 500
 
