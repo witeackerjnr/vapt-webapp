@@ -37,7 +37,7 @@ document.getElementById('scanForm').addEventListener('submit', async function(e)
     loading.style.display = 'block';
 
     try {
-        const response = await fetch('http://127.0.0.1:5000/scan', {
+        const response = await fetch('https://vapt-webapp.onrender.com/scan', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ target })
