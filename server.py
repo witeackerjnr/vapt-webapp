@@ -1,12 +1,12 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
-import nmap
+import nmap3
 import re
 import time
 
 app = Flask(__name__)
 
-# Allow only Netlify frontend
+# Allow only Netlify frontend (Replace with your actual Netlify URL)
 NETLIFY_URL = "https://webdefend.netlify.app"
 CORS(app, resources={r"/scan": {"origins": NETLIFY_URL, "methods": ["GET", "POST", "OPTIONS"], "allow_headers": ["Content-Type"]}}, supports_credentials=True)
 
@@ -17,9 +17,18 @@ request_count = {}
 def home():
     return jsonify({"message": "Welcome to the VAPT Web App!"}), 200
 
+def run_nmap_scan(target):
+    """Runs a basic Nmap scan using python-nmap3."""
+    nm = nmap3.NmapScanTechniques()
+    try:
+        scan_result = nm.nmap_ping_scan(target)
+        return scan_result
+    except Exception as e:
+        return {"error": f"Nmap error: {str(e)}"}
+
 @app.route("/scan", methods=["POST", "OPTIONS"])
 def scan():
-    # Handle CORS Preflight Requests
+    """Handles scanning requests from the frontend."""
     if request.method == "OPTIONS":
         return jsonify({"message": "CORS Preflight OK"}), 200
 
@@ -29,32 +38,12 @@ def scan():
     if not target:
         return jsonify({"error": "Target IP/Domain is required"}), 400
 
-    # Strict input validation (Only valid IPs or domains)
     if not re.match(r"^(?:[a-zA-Z0-9-]+\.)*[a-zA-Z0-9-]+$", target):
         return jsonify({"error": "Invalid target format"}), 400
 
-    # Rate Limiting: Max 3 requests per 10 seconds per IP
-    client_ip = request.remote_addr
-    current_time = time.time()
-
-    if client_ip in request_count:
-        last_request_time = request_count[client_ip][0]
-        request_count[client_ip] = (current_time, request_count[client_ip][1] + 1)
-
-        if request_count[client_ip][1] > 3 and (current_time - last_request_time < 10):
-            return jsonify({"error": "Too many requests. Please wait."}), 429
-    else:
-        request_count[client_ip] = (current_time, 1)
-
-    # Run Nmap scan using Python-Nmap
-    try:
-        nm = nmap.PortScanner()
-        scan_result = nm.scan(hosts=target, arguments='-F')
-        return jsonify({"scan_result": scan_result}), 200
-    except nmap.PortScannerError as e:
-        return jsonify({"error": f"Nmap error: {str(e)}"}), 500
-    except Exception as e:
-        return jsonify({"error": f"Unexpected error: {str(e)}"}), 500
+    scan_result = run_nmap_scan(target)
+    
+    return jsonify({"scan_result": scan_result}), 200
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=10000, debug=False)
