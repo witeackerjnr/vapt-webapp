@@ -1,0 +1,234 @@
+/* General Styles */
+body {
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
+    background: #f0f8ff; /* Light Blue */
+    color: #333; /* Dark Gray */
+}
+
+/* Sticky Navbar with Gradient */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 30px;
+    background: linear-gradient(90deg, #00bfff, #1e90ff); /* Gradient Blue */
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.navbar ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    gap: 1.5rem;
+}
+
+.navbar a {
+    color: white;
+    font-weight: bold;
+    text-decoration: none;
+    padding: 12px 18px;
+    border-radius: 5px;
+    transition: background 0.3s, transform 0.2s;
+}
+
+.navbar a:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: scale(1.05);
+}
+
+/* Prevent content from hiding under navbar */
+body {
+    padding-top: 70px;
+}
+
+/* Header Section */
+header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 40px 60px;
+    background: #e0f7fa; /* Very Light Blue */
+    border-bottom: 2px solid #87cefa;
+}
+
+header .logo {
+    width: 120px;
+}
+
+header .header-text {
+    text-align: left;
+    max-width: 600px;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 2.5rem;
+    color: #1e3a5f; /* Dark Blue */
+}
+
+header p {
+    margin: 10px 0;
+    font-size: 1.2rem;
+    color: #444;
+}
+
+/* Buttons */
+.btn {
+    background: linear-gradient(90deg, #00bfff, #1e90ff); /* Gradient */
+    color: white;
+    padding: 12px 25px;
+    font-weight: bold;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+    display: inline-block;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.btn:hover {
+    background: #1e90ff;
+    transform: scale(1.05);
+}
+
+/* Sections */
+section {
+    padding: 50px 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    text-align: left;
+}
+
+section h2 {
+    font-size: 2rem;
+    color: #1e3a5f; /* Dark Blue */
+    margin-bottom: 20px;
+}
+
+section p {
+    font-size: 1.1rem;
+    color: #444;
+    line-height: 1.6;
+}
+
+/* Features Section */
+.features {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.feature {
+    flex: 1;
+    min-width: 250px;
+    background: #e0f7fa; /* Very Light Blue */
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s;
+}
+
+.feature:hover {
+    transform: scale(1.03);
+}
+
+.feature h3 {
+    margin-top: 0;
+    color: #1e3a5f; /* Dark Blue */
+}
+
+.feature p {
+    color: #444;
+}
+
+/* Forms */
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+form input, form textarea {
+    width: 100%;
+    max-width: 500px;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    transition: all 0.3s;
+}
+
+form input:focus, form textarea:focus {
+    border-color: #00bfff;
+    box-shadow: 0 0 5px rgba(0, 191, 255, 0.5);
+    outline: none;
+}
+
+form button {
+    width: 100%;
+    max-width: 500px;
+    background: #00bfff; /* Light Blue */
+    color: white;
+    font-size: 1rem;
+    padding: 12px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: all 0.3s;
+}
+
+form button:hover {
+    background: #1e90ff;
+    transform: scale(1.05);
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    padding: 20px;
+    background: linear-gradient(90deg, #00bfff, #1e90ff); /* Gradient Blue */
+    color: white;
+    font-weight: bold;
+    margin-top: 40px;
+}
+
+/* Contact Info */
+.contact-info p {
+    margin: 10px 0;
+    font-weight: bold;
+}
+
+.contact-info a {
+    color: #00bfff; /* Light Blue */
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.contact-info a:hover {
+    text-decoration: underline;
+}
+
+/* Scanning Message */
+#loading {
+    display: none; /* Hidden by default */
+    font-size: 16px;
+    margin-top: 15px; /* Adds space below submit button */
+    color: #1e90ff;
+    font-weight: bold;
+    text-align: center;}
+
+footer {
+        margin-top: auto; /* Pushes footer to bottom */
+        text-align: center;
+        padding: 20px;
+        background: linear-gradient(90deg, #00bfff, #1e90ff);
+        color: white;
+}
+
+
+

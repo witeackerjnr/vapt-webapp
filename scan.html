@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VAPT Web App - Demo</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <img src="logo-placeholder.png" alt="Company Logo" class="logo">
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="contact.html">Contact Us</a></li>
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="scan.html">Demo</a></li>
+        </ul>
+    </nav>
+
+    <section>
+        <form id="scanForm">
+            <h1>Run a Security Scan</h1>
+            <input type="text" id="target" placeholder="Enter IP or Domain" required>
+            <button type="submit">Run Scan</button>
+            <div class="loading" id="loading">🔄 Scanning...</div>
+        </form>
+        <pre id="scanResults"></pre>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2025 Let's Defend. All rights reserved.</p>
+    </footer>
+
+    <script src="script.js"></script>
+
+</body>
+</html>
