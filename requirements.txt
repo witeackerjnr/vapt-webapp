@@ -1,3 +1,5 @@
+nmap
+python-nmap
 Flask
 flask-cors
 gunicorn
