@@ -12,7 +12,12 @@
     <!-- Navbar -->
     <nav class="navbar">
         <img src="logo-placeholder.png" alt="Company Logo" class="logo">
-        <ul>
+        <div class="hamburger" id="hamburger">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+        <ul id="nav-links">
             <li><a href="index.html">Home</a></li>
             <li><a href="contact.html">Contact Us</a></li>
             <li><a href="about.html">About Us</a></li>
@@ -41,6 +46,15 @@
     <footer>
         <p>&copy; 2025 Let's Defend. All rights reserved.</p>
     </footer>
+
+    <script>
+        const hamburger = document.getElementById('hamburger');
+        const navLinks = document.getElementById('nav-links');
+
+        hamburger.addEventListener('click', () => {
+            navLinks.classList.toggle('show');
+        });
+    </script>
 
 </body>
 </html>
