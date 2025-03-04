@@ -2,10 +2,17 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 import subprocess
 import re
-import time
 
 app = Flask(__name__)
-CORS(app, resources={r"/*": {"origins": "*"}})
+CORS(app, supports_credentials=True)
+
+@app.after_request
+def add_cors_headers(response):
+    """Ensure all responses include proper CORS headers"""
+    response.headers["Access-Control-Allow-Origin"] = "*"
+    response.headers["Access-Control-Allow-Headers"] = "Content-Type"
+    response.headers["Access-Control-Allow-Methods"] = "POST, OPTIONS"
+    return response
 
 @app.route("/")
 def home():
@@ -22,8 +29,8 @@ def scan():
     if not re.match(r"^[a-zA-Z0-9.-]+$", target):
         return jsonify({"error": "Invalid target format"}), 400
 
-    # Run Nmap in unprivileged mode
     try:
+        # Run Nmap with `-F --unprivileged` mode (as you requested)
         result = subprocess.run(
             ["nmap", "-F", "--unprivileged", target], 
             stdout=subprocess.PIPE, 
@@ -39,4 +46,3 @@ def scan():
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000, debug=True)
-
