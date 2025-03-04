@@ -34,10 +34,11 @@
             <p>📞 WhatsApp: <a href="https://wa.me/2348131632363">+2348131632363</a></p>
         </div>
 
-        <form id="contactForm" netlify>
+        <form id="contactForm" netlify data-netlify-recaptcha="true">
             <input type="text" placeholder="Your Name" required>
             <input type="email" placeholder="Your Email" required>
             <textarea placeholder="Your Message" required></textarea>
+            <div data-netlify-recaptcha="true"></div>
             <button type="submit">Send Message</button>
         </form>
     </section>
