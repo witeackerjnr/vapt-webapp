@@ -3,7 +3,12 @@ document.addEventListener("DOMContentLoaded", function() {
     const navbar = `
         <nav class="navbar">
             <img src="logo-placeholder.png" alt="Company Logo" class="logo">
-            <ul>
+            <div class="hamburger" id="hamburger">
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+            <ul id="nav-links">
                 <li><a href="index.html">Home</a></li>
                 <li><a href="contact.html">Contact Us</a></li>
                 <li><a href="about.html">About Us</a></li>
@@ -12,53 +17,74 @@ document.addEventListener("DOMContentLoaded", function() {
         </nav>
     `;
     document.body.insertAdjacentHTML("afterbegin", navbar);
+
+    // Mobile Navbar Toggle
+    const hamburger = document.getElementById("hamburger");
+    const navLinks = document.getElementById("nav-links");
+
+    hamburger.addEventListener("click", () => {
+        navLinks.classList.toggle("show");
+    });
 });
 
-// Handle Scan Form Submission
-document.getElementById('scanForm').addEventListener('submit', async function(e) {
-    e.preventDefault();
+// Local API Base URL
+const apiBaseUrl = "http://127.0.0.1:5000";  // Only local Flask API
 
-    const targetField = document.getElementById('target');
-    const target = targetField.value.trim();
-    const loading = document.getElementById('loading');
-    const scanResults = document.getElementById('scanResults');
+console.log("Using API Base URL:", apiBaseUrl);  // Debugging
 
-    // Clear previous results
-    scanResults.innerText = "";
-    loading.style.display = 'none';
+// Ensure scanForm exists before adding event listener
+const scanForm = document.getElementById('scanForm');
+if (scanForm) {
+    scanForm.addEventListener('submit', async function(e) {
+        e.preventDefault();
 
-    // Validate Input
-    if (!target) {
-        scanResults.innerText = "⚠️ Please enter a valid IP or domain.";
-        return;
-    }
+        const targetField = document.getElementById('target');
+        const target = targetField.value.trim();
+        const loading = document.getElementById('loading');
+        const scanResults = document.getElementById('scanResults');
 
-    // Show Scanning Message Only When Scan Starts
-    loading.style.display = 'block';
+        // Clear previous results
+        scanResults.innerHTML = "";
+        loading.style.display = 'none';
 
-    try {
-        const response = await fetch('http://127.0.0.1:5000/scan', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ target })
-        });
-
-        const data = await response.json();
-
-        if (response.ok) {
-            scanResults.innerText = sanitizeOutput(data.scan_result);
-        } else {
-            scanResults.innerText = `❌ Error: ${data.error || "Unknown error"}`;
+        // Validate Input
+        if (!target) {
+            scanResults.innerHTML = "<span style='color: red; font-weight: bold;'>⚠️ Please enter a valid IP or domain.</span>";
+            return;
         }
-    } catch (error) {
-        scanResults.innerText = "❌ Failed to connect to server.";
-    }
 
-    // Hide Scanning Message When Done
-    loading.style.display = 'none';
-});
+        // Show Scanning Message Directly Under Button
+        loading.style.display = 'block';
 
-// Prevent XSS by escaping special characters in scan results
-function sanitizeOutput(text) {
-    return text.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+        try {
+            console.log("Sending request to:", `${apiBaseUrl}/scan`);  // Debugging
+
+            const response = await fetch(`${apiBaseUrl}/scan`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ target })
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
+                scanResults.innerHTML = formatScanResults(data.scan_result);
+            } else {
+                scanResults.innerHTML = `<span style='color: red; font-weight: bold;'>❌ Error: ${data.error || "Unknown error"}</span>`;
+            }
+        } catch (error) {
+            console.error("Fetch Error:", error);  // Debugging
+            scanResults.innerHTML = "<span style='color: red; font-weight: bold;'>❌ Failed to connect to server.</span>";
+        }
+
+        // Hide Scanning Message When Done
+        loading.style.display = 'none';
+    });
+} else {
+    console.error("❌ scanForm not found! Check if scan.html is loaded before script.js");
+}
+
+// Format scan results properly (prevents XSS)
+function formatScanResults(text) {
+    return `<pre style="background: #f4f4f4; padding: 10px; border-radius: 5px;">${text.replace(/</g, "&lt;").replace(/>/g, "&gt;")}</pre>`;
 }
