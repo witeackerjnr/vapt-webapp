@@ -27,8 +27,8 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 });
 
-// Local API Base URL
-const apiBaseUrl = "https://4f89-102-89-82-133.ngrok-free.app";  // Only local Flask API
+// **Update API Base URL** (Replace with new ngrok link each time)
+const apiBaseUrl = "https://4f89-102-89-82-133.ngrok-free.app";  // Ensure this matches your ngrok URL
 
 console.log("Using API Base URL:", apiBaseUrl);  // Debugging
 
@@ -53,7 +53,7 @@ if (scanForm) {
             return;
         }
 
-        // Show Scanning Message Directly Under Button
+        // Show Scanning Message
         loading.style.display = 'block';
 
         try {
@@ -62,6 +62,7 @@ if (scanForm) {
             const response = await fetch(`${apiBaseUrl}/scan`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
+                mode: 'cors',  // Ensures CORS handling
                 body: JSON.stringify({ target })
             });
 
