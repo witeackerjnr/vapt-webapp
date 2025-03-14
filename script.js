@@ -28,7 +28,7 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
 // Local API Base URL
-const apiBaseUrl = "https://2743-102-89-75-204.ngrok-free.app";  // Only local Flask API
+const apiBaseUrl = "https://4f89-102-89-82-133.ngrok-free.app";  // Only local Flask API
 
 console.log("Using API Base URL:", apiBaseUrl);  // Debugging
 
