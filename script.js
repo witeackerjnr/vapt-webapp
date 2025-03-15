@@ -28,7 +28,7 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
 // **Update API Base URL** (Replace with new ngrok link each time)
-const apiBaseUrl = "https://4f89-102-89-82-133.ngrok-free.app";  // Ensure this matches your ngrok URL
+const apiBaseUrl = "https://c65d-102-89-84-229.ngrok-free.app";  // Ensure this matches your ngrok URL
 
 console.log("Using API Base URL:", apiBaseUrl);  // Debugging
 
